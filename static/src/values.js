@@ -23,4 +23,16 @@ values = [
     "Name": "Disney Plus",
     "Price": 7.99
   },
+  {
+    "Name": "Xbox Live",
+    "Price": 9.99
+  },
+  {
+    "Name": "Apple Music",
+    "Price": 9.99
+  },
+  {
+    "Name": "SoundCloud Go+",
+    "Price": 12.99
+  },
 ];
