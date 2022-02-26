@@ -28,7 +28,7 @@
       <div class="container g-3 align-items-center pt-2">
         <div class="col-lg-4 input-group">
           <div class="col-lg-10">
-            <select class="form-select" aria-label="Default select example" id = "select">
+            <select class="form-select" aria-label="Default select example" id = "select_drop">
               <option selected>Select</option>
               <option value="1">Amazon Prime $14.99</option>
               <option value="2">Netflix Basic Plan $9.99</option>
@@ -40,7 +40,10 @@
           </div>
 
           <div class="col-lg-2">
-            <button type="button" class="btn btn-success" onClick = "add()">Add</button>
+            <button type="button" class="btn btn-success" onClick = "add(values)">Add</button>
+          </div>
+          <div class="my_account!!!!">
+
           </div>
         </div>
       </div>
@@ -52,14 +55,18 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="static/src/fb_keys.js"></script>
+    <script src="static/src/values.js"></script>
     <script type="text/javascript">
-      function add(){
 
+      function add(values){
+        //alert("test");
+        alert(values[0]["name"]);
         var temp_array = [];
-        var e = document.getElementbyID('select');
-        alert(e);
-        var value = e.options[e.selectedIndex].text;
-        alert(value)
+        var total = 0;
+        var e = document.getElementById("select_drop");
+        var index = e.value;
+        var strUser = e.options[e.selectedIndex].text;
+        temp_array.push(strUser);
       }
     </script>
   </body>
