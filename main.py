@@ -17,6 +17,11 @@ def user_index():
 
     return render_template('login.html')
 
+
+@app.route('/user_sign_up' , methods = ['GET' , 'POST'])
+def user_sign_up():
+    return render_template('createAccount.html')
+
 @app.route('/user_table' , methods = ['GET' , 'POST'])
 def user_table():
     return render_template('user_table.html')

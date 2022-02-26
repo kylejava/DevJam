@@ -16,8 +16,7 @@
         </div>
           <span class="navbar-toggler-icon"></span>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <a id="loginbutton" class="btn btn-secondary" href="#" role="button">Login</a>
-          <a id="signupbutton" class="btn btn-secondary" href="#" role="button">Signup</a>
+                  <a id="email" class="btn btn-secondary" href="#" role="button">kyleedwardgjava@gmail.com</a>
         </div>
       </div>
     </nav>
@@ -42,8 +41,28 @@
           <div class="col-lg-2">
             <button type="button" class="btn btn-success" onClick = "add(values)">Add</button>
           </div>
-          <div class="my_account!!!!">
+          <div class = "container pt-5" id="my_account!!!!">
+            <table class="table col-lg-10">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody id = "tbody">
 
+              </tbody>
+              <thead>
+                <tr>
+                  <th scope="col">Total</th>
+                  <th scope="col">Yearly Total</th>
+                </tr>
+              </thead>
+              <tbody id = "tbody_total">
+
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -57,16 +76,57 @@
     <script src="static/src/fb_keys.js"></script>
     <script src="static/src/values.js"></script>
     <script type="text/javascript">
-
+      document.getElementById('email').innerHTML = "mytest email please work";
+      var my_account = document.getElementById('my_account!!!')
+      var temp_array = [];
+      var counter = 0
+      var total = 0;
+      var yearly_total = 0;
+      var tbody = document.getElementById('tbody');
+      var tbody_total = document.getElementById('tbody_total');
       function add(values){
-        //alert("test");
-        alert(values[0]["name"]);
-        var temp_array = [];
-        var total = 0;
+        counter+=1;
         var e = document.getElementById("select_drop");
         var index = e.value;
         var strUser = e.options[e.selectedIndex].text;
-        temp_array.push(strUser);
+
+        var tr = document.createElement('tr');
+        var counter_td = document.createElement('td');
+        var counter_text = document.createTextNode(counter);
+        counter_td.appendChild(counter_text);
+        tr.appendChild(counter_td);
+
+
+        var name_td = document.createElement('td');
+        var name_text = document.createTextNode(values[index-1]["Name"]);
+        name_td.appendChild(name_text);
+        tr.appendChild(name_td);
+
+        var price_td = document.createElement('td');
+        var price_text = document.createTextNode(values[index-1]["Price"]);
+        price_td.appendChild(price_text);
+        tr.appendChild(price_td);
+
+
+
+
+        tbody.appendChild(tr);
+
+        total += values[index-1]["Price"];
+        yearly_total = total * 12;
+
+        var tr_total = document.createElement('tr');
+        var total_td = document.createElement('td');
+        var total_text = document.createTextNode(total);
+        total_td.appendChild(total_text);
+        tr_total.appendChild(total_td);
+
+        var yearly_total_td = document.createElement('td');
+        var  yearly_total_text= document.createTextNode(yearly_total);
+        yearly_total_td.appendChild(yearly_total_text);
+        tr_total.appendChild(yearly_total_td);
+
+        tbody_total.appendChild(tr_total);
       }
     </script>
   </body>
