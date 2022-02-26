@@ -14,3 +14,10 @@
     position: relative;
     left: 750px;
 }
+
+#info-row{
+    padding-top: 60px;;
+}
+#sticky-footer{
+    height: 100px;
+}
