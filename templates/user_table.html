@@ -148,7 +148,12 @@
         "Price": price_text
       };
       sub.push(name_text);
+      var washingtonRef = db.collection("users").doc(email);
 
+      // Atomically add a new region to the "regions" array field.
+      washingtonRef.update({
+          regions: firebase.firestore.FieldValue.arrayUnion(name_text)
+      });
       /*
       var tr_total = document.createElement('tr');
       var total_td = document.createElement('td');
@@ -182,7 +187,7 @@
           // https://firebase.google.com/docs/reference/js/firebase.User
           document.getElementById('email').innerHTML = user.email;
           var email = user.email;
-          var btn = document.getElementById('button')
+          var btn = document.getElementById('button');
           btn.addEventListener("click", () => {
             db.collection("users").doc(email).set({
             Total: total,
