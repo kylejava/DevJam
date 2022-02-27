@@ -1,0 +1,21 @@
+#navbar{
+    background-color: #008601;
+    color: #ccd2db;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#loginbutton{
+    position: relative;
+    left: 710px;
+}
+
+#signupbutton{
+    position: relative;
+    left: 720px;
+}
+
+#about{
+    position: relative;
+    left: 730px;
+}
