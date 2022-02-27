@@ -12,9 +12,13 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route('/user_login' , methods = ['GET' , 'POST'])
+@app.route('/login' , methods = ['GET' , 'POST'])
 def user_index():
     return render_template('login.html')
+
+@app.route('/createAccount' , methods = ['GET' , 'POST'])
+def signup():
+    return render_template('createAccount.html')
 
 # @app.route('/user_table' , methods = ['GET' , 'POST'])
 # def user_table():
