@@ -16,7 +16,7 @@
         </div>
           <span class="navbar-toggler-icon"></span>
         <div class="collapse navbar-collapse" id="navbarNav">
-                  <a id="email" class="btn btn-secondary" href="#" role="button">kyleedwardgjava@gmail.com</a>
+                  <a id="email" class="btn btn-secondary" href="#" role="button"></a>
         </div>
       </div>
     </nav>
@@ -56,14 +56,20 @@
               <tbody id = "tbody">
 
               </tbody>
+            </table>
+
+            <table class="table col-lg-10">
               <thead>
                 <tr>
-                  <th scope="col">Total</th>
+                  <th scope="col">Monthly Total</th>
                   <th scope="col">Yearly Total</th>
                 </tr>
               </thead>
-              <tbody id = "tbody_total">
-
+              <tbody id = "tbody_total" class = "pt-5">
+                <tr>
+                  <td id = "total"></td>
+                  <td id = "yearly_total"></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -75,62 +81,90 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="../static/src/keys.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="static/src/fb_keys.js"></script>
-    <script src="static/src/values.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+    <script src="static/src/user_table.js"></script>
     <script type="text/javascript">
-      document.getElementById('email').innerHTML = "mytest email please work";
-      var my_account = document.getElementById('my_account!!!')
-      var temp_array = [];
-      var counter = 0
-      var total = 0;
-      var yearly_total = 0;
-      var tbody = document.getElementById('tbody');
-      var tbody_total = document.getElementById('tbody_total');
-      function add(values){
-        counter+=1;
-        var e = document.getElementById("select_drop");
-        var index = e.value;
-        var strUser = e.options[e.selectedIndex].text;
+    var my_account = document.getElementById('my_account!!!')
+    var temp_array = [];
+    var counter = 0
+    var total = 0;
+    var yearly_total = 0;
+    var tbody = document.getElementById('tbody');
+    var tbody_total = document.getElementById('tbody_total');
+    function add(values){
+      counter+=1;
+      var e = document.getElementById("select_drop");
+      var index = e.value;
+      var strUser = e.options[e.selectedIndex].text;
 
-        var tr = document.createElement('tr');
-        var counter_td = document.createElement('td');
-        var counter_text = document.createTextNode(counter);
-        counter_td.appendChild(counter_text);
-        tr.appendChild(counter_td);
-
-
-        var name_td = document.createElement('td');
-        var name_text = document.createTextNode(values[index-1]["Name"]);
-        name_td.appendChild(name_text);
-        tr.appendChild(name_td);
-
-        var price_td = document.createElement('td');
-        var price_text = document.createTextNode(values[index-1]["Price"]);
-        price_td.appendChild(price_text);
-        tr.appendChild(price_td);
+      var tr = document.createElement('tr');
+      var counter_td = document.createElement('td');
+      var counter_text = document.createTextNode(counter);
+      counter_td.appendChild(counter_text);
+      tr.appendChild(counter_td);
 
 
+      var name_td = document.createElement('td');
+      var name_text = document.createTextNode(values[index-1]["Name"]);
+      name_td.appendChild(name_text);
+      tr.appendChild(name_td);
 
+      var price_td = document.createElement('td');
+      var price_text = document.createTextNode(values[index-1]["Price"]);
+      price_td.appendChild(price_text);
+      tr.appendChild(price_td);
 
-        tbody.appendChild(tr);
+      var button = document.createElement('td');
+      var button_node = document.createElement('button');
+      button_node.type = 'button';
+      button_node.innerHTML = 'Delete';
+      button_node.className = 'btn btn-danger';
+      button.appendChild(button_node);
+      tr.appendChild(button);
 
-        total += values[index-1]["Price"];
-        yearly_total = total * 12;
+      tbody.appendChild(tr);
 
-        var tr_total = document.createElement('tr');
-        var total_td = document.createElement('td');
-        var total_text = document.createTextNode(total);
-        total_td.appendChild(total_text);
-        tr_total.appendChild(total_td);
+      total += values[index-1]["Price"];
+      yearly_total = total * 12;
 
-        var yearly_total_td = document.createElement('td');
-        var  yearly_total_text= document.createTextNode(yearly_total);
-        yearly_total_td.appendChild(yearly_total_text);
-        tr_total.appendChild(yearly_total_td);
+      var total_td = document.getElementById('total');
+      total_td.innerHTML = total;
 
-        tbody_total.appendChild(tr_total);
-      }
+      var yearly_total_td = document.getElementById('yearly_total');
+      yearly_total_td.innerHTML = yearly_total;
+      /*
+      var tr_total = document.createElement('tr');
+      var total_td = document.createElement('td');
+      var total_text = document.createTextNode(total);
+      total_td.appendChild(total_text);
+      tr_total.appendChild(total_td);
+
+      var yearly_total_td = document.createElement('td');
+      var  yearly_total_text= document.createTextNode(yearly_total);
+      yearly_total_td.appendChild(yearly_total_text);
+      tr_total.appendChild(yearly_total_td);
+
+      tbody_total.appendChild(tr_total);
+      */
+    }
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          document.getElementById('email').innerHTML = user.email;
+
+          // ...
+        } else {
+          // User is signed out
+          alert("this doesn't");
+          // ...
+        }
+      });
+
     </script>
+    <script src="static/src/values.js"></script>
   </body>
 </html>

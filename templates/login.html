@@ -22,21 +22,21 @@
       </div>
     </nav>
     <div class="container">
-      <form class="form" id="login">
+
         <h1 class="form__title">Login</h1>
 
         <div class="form__message form__message">Enter Email Address & Password</div>
 
         <div class="form__input-group">
-          <input type="text" class="form__input" autofocus placeholder="Email">
+          <input type="text" class="form__input" autofocus placeholder="Email" id = "email">
           <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-          <input type="password" class="form__input" autofocus placeholder="Password">
+          <input type="password" class="form__input" autofocus placeholder="Password" id = "password">
           <div class="form__input-error-message"></div>
         </div>
 
-        <button class="form__button" type="submit">Continue</button>
+        <button class="form__button" type="button" onclick = "login()">Continue</button>
 
         <p class="form__text">
           <a href="#" class="form__link">Forgot your password?</a>
@@ -45,35 +45,34 @@
 
           <a href="/user_sign_up" class="form__link" id="linkCreateAccount">Don't have an account? Create account</a>
         </p>
-      </form>
-      <!-- <form class="form form--hidden" id="createAccount">
-      <h1 class="form__title">Create Account</h1>
-      <div class="form__message form__message--error"></div>
-      <div class="form__input-group">
-        <input type="text" class="form__input" autofocus placeholder="Email Address">
-        <div class="form__input-error-message"></div>
-      </div>
-      <div class="form__input-group">
-        <input type="password" class="form__input" autofocus placeholder="Password">
-        <div class="form__input-error-message"></div>
-      </div>
-      <div class="form__input-group">
-        <input type="password" class="form__input" autofocus placeholder="Confirm password">
-        <div class="form__input-error-message"></div>
-      </div>
-      <button class="form__button" type="submit">Continue</button>
-      <p class="form__text">
-        <a class="form__link" href="/templates/createAccount.html" id="linkLogin">Already have an account? Sign in</a>
-      </p>
-      </form>
-
-
-          <a href = '/user_sign_up'class="form__link" id="linkCreateAccount">Don't have an account? Create account</a>
-        </p>
-      </form>
--->
     </div>
-      <script src="./login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+    <script src="../static/src/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+    <script type="text/javascript">
+    
+    function login(){
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        var user = userCredential.user;
+        if(user.emailVerified == false){
+          alert("User Needs To Verify Email Address!!!!");
+        }
+        else{
+          location.href = "/user_table";
+        }
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        location.href = "/user_sign_up"
+      });
 
+    }
+    </script>
   </body>
 </html>

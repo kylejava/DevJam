@@ -20,7 +20,7 @@
       </div>
     </nav>
     <div class="container">
-      <form class="form" id="createAccount">
+
         <h1 class="form__title">Create Account</h1>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
@@ -39,35 +39,23 @@
         <p class="form__text">
           <a class="form__link" href="/user_login" id="linkLogin">Already have an account? Sign in</a>
         </p>
-      </form>
 
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+    <script src="../static/src/keys.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
-  <script src = "../static/src/auth.js"></script>
   <script type="text/javascript">
     function createNewUser() {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
-    var display = document.getElementById('displayName').value;
-    var ageVerification = document.getElementById('ageVerification');
-    alert(email);
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((user) => {
       firebase.auth().onAuthStateChanged(function(user) {
-          if (user && ageVerification.checked == true) {
-            user.sendEmailVerification().then(function() {
-              // Email sent.
-              user.displayName = display;
-              location.href = "/signin";
-            }).catch(function(error) {
-              // An error happened.
-            });
-            alert(user);
-          } else {
-            alert("user is not signed in");
-          }
+        firebase.auth().currentUser.sendEmailVerification()
+          .then(() => {
+            location.href = '/user_login'
+          });
         });
     })
     .catch((error) => {
