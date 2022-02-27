@@ -17,6 +17,7 @@
           <span class="navbar-toggler-icon"></span>
         <div class="collapse navbar-collapse" id="navbarNav">
                   <a id="email" class="btn btn-secondary" href="#" role="button"></a>
+                  <button class="btn btn-danger"  type="button" name="button" onclick = "signOut()">Sign Out</button>
         </div>
       </div>
     </nav>
@@ -42,7 +43,7 @@
           </div>
 
           <div class="col-lg-2">
-            <button type="button" class="btn btn-success" onClick = "add(values)">Add</button>
+            <button id = "button"type="button" class="btn btn-success" onClick = "add(values)">Add</button>
           </div>
           <div class = "container pt-5" id="my_account!!!!">
             <table class="table col-lg-10">
@@ -84,18 +85,21 @@
     <script src="../static/src/keys.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+    <script src="../static/src/signout.js"></script>
     <script src="static/src/user_table.js"></script>
+
     <script type="text/javascript">
 
     var my_account = document.getElementById('my_account!!!')
-    var temp_array = [];
-    var counter = 0
+    var sub = [];
+    var counter = 0;
     var total = 0;
     var yearly_total = 0;
     var tbody = document.getElementById('tbody');
     var tbody_total = document.getElementById('tbody_total');
+    var db = firebase.firestore();
     function add(values){
-      counter+=1;
+      counter = counter + 1;
       var e = document.getElementById("select_drop");
       var index = e.value;
       var strUser = e.options[e.selectedIndex].text;
@@ -138,6 +142,13 @@
 
       var yearly_total_td = document.getElementById('yearly_total');
       yearly_total_td.innerHTML = yearly_total;
+
+      var obj = {
+        "Name": name_text,
+        "Price": price_text
+      };
+      sub.push(name_text);
+
       /*
       var tr_total = document.createElement('tr');
       var total_td = document.createElement('td');
@@ -152,19 +163,41 @@
 
       tbody_total.appendChild(tr_total);
       */
-    }
+
+      db.collection("users").doc(email).set({
+      Total: total,
+      Yearly_Total: yearly_total,
+      })
+      .then(() => {
+          alert("Document successfully written!");
+      })
+      .catch((error) => {
+          alert("Error writing document: ", error);
+      });
+        }
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
 
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           document.getElementById('email').innerHTML = user.email;
+          var email = user.email;
+          var btn = document.getElementById('button')
+          btn.addEventListener("click", () => {
+            db.collection("users").doc(email).set({
+            Total: total,
+            Yearly_Total: yearly_total,
+            })
+            .then(() => {
 
-          // ...
+            })
+            .catch((error) => {
+                alert("Error writing document: ", error);
+            });
+          });
+
+          //...
         } else {
-          // User is signed out
-          alert("this doesn't");
-          // ...
         }
       });
 

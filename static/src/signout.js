@@ -1,14 +1,9 @@
-logout.addEventListener('click',(e)=>{
 
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      alert('user loged out');
-    }).catch((error) => {
-      // An error happened.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-         alert(errorMessage);
-    });
-
- });
+function signOut(){
+  firebase.auth().signOut().then(function() {
+    alert('Signed Out');
+    location.href = '/';
+  }, function(error) {
+    alert('Sign Out Error', error);
+  });
+}
